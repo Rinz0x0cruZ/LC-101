@@ -1,19 +1,17 @@
+
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode* root) {
-        if(!root) return {};
-        stack<TreeNode*> stk;
+    vector<int> preorderTraversal(TreeNode* root) {
         vector<int> res;
-        TreeNode* ptr=root;
-        while(ptr || !stk.empty()){
-            while(ptr){ 
-                stk.push(ptr);
-                ptr=ptr->left;
-            }
-            ptr=stk.top();
+        stack<TreeNode*> stk;
+        if(!root) return {};
+        stk.push(root);
+        while(!stk.empty()){
+            TreeNode* t=stk.top();
+            res.emplace_back(t->val);
             stk.pop();
-            res.emplace_back(ptr->val);
-            ptr=ptr->right;
+            if(t->right) stk.push(t->right);
+            if(t->left) stk.push(t->left);
         }
         return res;
     }
